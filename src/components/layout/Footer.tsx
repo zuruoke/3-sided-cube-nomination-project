@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     return (
         <footer className="bg-black text-white p-8 lg:p-16">
             
-            <div className="flex justify-center mb-8 border-b border-gray-600 pb-8">
+            <div className="flex justify-left mb-8 border-b border-gray-600 pb-8">
                 <Image
                     src="/Green.png"
                     alt="3 SIDED CUBE"

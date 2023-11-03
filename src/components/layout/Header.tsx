@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ nominationsCount }) => {
             <div className="flex items-center space-x-4">
                 <div>
                     <Image
-                        src="/Green.png" // Update this with the actual path to your logo
+                        src="/Green.png" 
                         alt="3 SIDED CUBE"
                         width={150}
                         height={50}
