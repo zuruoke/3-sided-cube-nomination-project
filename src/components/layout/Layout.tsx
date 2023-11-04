@@ -8,10 +8,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="layout-container bg-custom-background">
+    <div className="layout-container bg-custom-background flex flex-col h-screen">
       <Header nominationsCount={3} />
 
-      <main>{children}</main>
+      <main className="flex-grow flex flex-col justify-center items-center">
+        {children}
+      </main>
 
       <Footer />
     </div>
@@ -19,3 +21,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 }
 
 export default Layout;
+
