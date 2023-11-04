@@ -1,7 +1,33 @@
+'use client'
+
 import React from 'react';
 import CustomButton from '../utils/buttons/Buttons';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useCubeAcademyLogin, useCubeAcademyRetrieveNomineeList } from '@/model/api/apiComponents';
 
 const IntroScreen: React.FC = () => {
+
+    const { data: nominees, isLoading, isError } = useCubeAcademyRetrieveNomineeList({headers: {'authorization': 'Bearer 353|plQb4q3N5YGptalYHioX5KN0kDwbpaWZHLPa4Msad931e8af'}});
+
+    // const { data: nominees, isLoading, isError } = useQuery({
+    //     queryKey: ["Nom"],
+    //     queryFn: () => {
+    //         const {data} = useCubeAcademyRetrieveNomineeList({headers: {'authorization': 'Bearer 353|plQb4q3N5YGptalYHioX5KN0kDwbpaWZHLPa4Msad931e8af'}})
+    //         console.log(data);
+    //     }
+    // });
+
+    if (isLoading){
+        return <div>LOADING....</div>
+    }
+    if (isError){
+        return <div>ERRROR...</div>
+    }
+
+    console.log(nominees)    
+
+
     return (
         <div className="flex flex-col bg-gray-200 items-center max-w-full mx-auto">
             <img src="/intro_screen.png" alt="Cube Nominations" className="w-full h-auto max-h-[300px] object-cover"/>
