@@ -10,8 +10,8 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <Layout>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          <IntroScreen />
+      <main className='flex min-h-screen flex-col items-center justify-between pt-10'>
+          <NominationsScreen />
       </main>
     </Layout>
   )
