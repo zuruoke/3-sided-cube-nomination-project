@@ -5,6 +5,8 @@ interface SubmissionsTileInterface {
   dateSubmitted: string;
   reason: string;
   processStatus: string;
+  deleteOnClick: () => void;
+  editOnClick: () => void;
 }
 
 const SubmissionsTile: React.FC<SubmissionsTileInterface> = ({
@@ -12,6 +14,8 @@ const SubmissionsTile: React.FC<SubmissionsTileInterface> = ({
   dateSubmitted,
   reason,
   processStatus,
+  deleteOnClick,
+  editOnClick,
 }) => {
   return (
     <div className='flex justify-between items-center border-b px-5 space-x-3 py-6'>
@@ -44,6 +48,7 @@ const SubmissionsTile: React.FC<SubmissionsTileInterface> = ({
         </p>
         <div className='flex flex-row gap-6 -mr-16'>
           <svg
+            onClick={deleteOnClick}
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
@@ -59,6 +64,7 @@ const SubmissionsTile: React.FC<SubmissionsTileInterface> = ({
           </svg>
 
           <svg
+            onClick={editOnClick}
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'

@@ -4,7 +4,7 @@ import { anonymous, poppins } from '@/app/layout';
 
 const Footer: React.FC = () => {
   return (
-    <footer className='bg-black text-white px-8 lg:pb-9 lg:px-36'>
+    <footer className='bg-black text-white pt-8 px-8 lg:pb-9 lg:px-36'>
       <div className='flex justify-left mb-8 border-b border-gray-300 pb-8'>
         <Image
           src='/Green.png'

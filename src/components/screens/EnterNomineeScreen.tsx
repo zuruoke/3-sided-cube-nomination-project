@@ -1,10 +1,14 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Dropdown from '../utils/Dropdown';
 import InputField from '../utils/forms/InputField';
 import CustomButton from '../utils/buttons/Buttons';
 import FairnessSlider from '../utils/Reactions';
 import Image from 'next/image';
 import { anonymous, poppins } from '@/app/layout';
+import Modal from '../utils/alerts/Modal';
+import { useRouter } from 'next/navigation';
 
 const emojis = {
   'Very Unfair': '/very_unfair.png',
@@ -14,14 +18,40 @@ const emojis = {
   'Very Fair': '/very_fair.png',
 };
 
+var open = true;
+
 const EnterNomineeScreen: React.FC = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  // const queryClient = useQueryClient();
+  // const queryKey = queryKeyFn({
+  //   path: "/api/nominee",
+  //   operationId: "cubeAcademyRetrieveNomineeList",
+  //   variables: {} // Assuming no additional variables are needed
+  // });
+  // console.log(queryKey)
+  // const cachedData = queryClient.getQueryData(queryKey);
+  // console.log(cachedData);
+
+  const router = useRouter();
   return (
-    <div className='bg-white h-full mb-24 w-4/5 px-10'>
+    <div className='bg-white h-full mb-24 mt-11 pt-10 w-3/5 px-10'>
       <HeaderImage />
       <NominationSection />
       <ReasonSection />
       <FairnessSection />
-      <NavigationButtons />
+      <NavigationButtons
+        backOnClick={() => setOpenModal(true)}
+        nextOnClick={() => router.push('/nominationOverview')}
+      />
+      <Modal
+        isOpen={openModal}
+        onConfirm={() => router.back()}
+        onCancel={() => setOpenModal(false)}
+        title='ARE YOU SURE?'
+        description='If you leave this page, you will lose any progress made.'
+        buttonText='YES, LEAVE PAGE'
+      />
     </div>
   );
 };
@@ -29,11 +59,11 @@ const EnterNomineeScreen: React.FC = () => {
 const HeaderImage: React.FC = () => (
   <div className='mb-7 object-cover'>
     <Image
-      width={1000}
-      height={600}
+      width={6000}
+      height={1000}
       src='/enter_nominee.png'
       alt='Nominations'
-      className='w-full h-48 object-contain shadow-sm'
+      className='w-full h-48 object-contain'
     />
   </div>
 );
@@ -98,16 +128,23 @@ const FairnessSection: React.FC = () => (
   </div>
 );
 
-const NavigationButtons: React.FC = () => (
+const NavigationButtons = ({
+  backOnClick,
+  nextOnClick,
+}: {
+  backOnClick: () => void;
+  nextOnClick: () => void;
+}) => (
   <div className='flex justify-between items-center pb-7 pt-3 mb-2'>
     <CustomButton
+      onClick={backOnClick}
       text='BACK'
       additionalStyles='mr-4 bg-white text-black outline outline-2 text-sm px-5 py-3 w-[104px] h-[50px] hover:text-white'
     />
     <CustomButton
       text='NEXT'
       additionalStyles='w-[223px] h-[50px] bg-black text-white disabled:bg-opacity-20'
-      disabled
+      onClick={nextOnClick}
     />
   </div>
 );

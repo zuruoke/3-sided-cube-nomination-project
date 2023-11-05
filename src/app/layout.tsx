@@ -27,7 +27,7 @@ export const anonymous = Anonymous_Pro({
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: 'Cube Nomination',
   description: 'Created by Okafor',
 }

@@ -1,4 +1,7 @@
+'use client';
+
 import { anonymous, poppins } from '@/app/layout';
+import { useRouter } from 'next/navigation';
 
 interface NominationOverviewTileProps {
   title: string;
@@ -9,6 +12,7 @@ const NominationOverviewTile: React.FC<NominationOverviewTileProps> = ({
   title,
   description,
 }) => {
+  const router = useRouter();
   return (
     <div className='my-2 mx-10  bg-gray-100 p-4 flex justify-between'>
       <div>
@@ -21,7 +25,7 @@ const NominationOverviewTile: React.FC<NominationOverviewTileProps> = ({
           {description}
         </p>
       </div>
-      <div>
+      <div onClick={() => router.back()}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'

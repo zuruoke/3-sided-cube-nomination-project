@@ -1,9 +1,13 @@
+'use client';
+
 import React from 'react';
 import CustomButton from '../utils/buttons/Buttons';
 import { anonymous, poppins } from '@/app/layout';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const IntroScreen: React.FC = () => {
+  const router = useRouter();
   return (
     <div className='flex flex-col bg-white items-center h-[591px] max-w-full mx-auto'>
       <Image
@@ -29,6 +33,7 @@ const IntroScreen: React.FC = () => {
         <CustomButton
           text='GET STARTED'
           additionalStyles='w-[286px] h-[50px] bg-black text-white border-none px-8 py-3 text-sm'
+          onClick={() => router.push('/enterNominee')}
         />
       </div>
     </div>

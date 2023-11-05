@@ -1,11 +1,15 @@
-import React from 'react';
+'use client';
+
+import React, { use } from 'react';
 import CustomButton from '../utils/buttons/Buttons';
 import Image from 'next/image';
 import { anonymous, poppins } from '@/app/layout';
+import { useRouter } from 'next/navigation';
 
 const NominationSubmittedScreen: React.FC = () => {
+  const router = useRouter();
   return (
-    <div className='flex flex-col items-center h-3/4  bg-gray-100'>
+    <div className='flex flex-col items-center h-3/4 mt-10 mb-28 pb-7 bg-white'>
       {/* Group photo */}
       <Image
         width={800}
@@ -33,10 +37,12 @@ const NominationSubmittedScreen: React.FC = () => {
       {/* Buttons */}
       <div className='flex space-x-4 mb-3'>
         <CustomButton
+          onClick={() => router.push('/nominations')}
           text='VIEW NOMINATIONS'
           additionalStyles='hover:bg-green-600 bg-white text-black py-2 text-sm px-8 w-[223px] h-[50px] outline outline-2'
         />
         <CustomButton
+          onClick={() => router.push('/enterNominee')}
           text='CREATE NEW NOMINATION'
           additionalStyles='bg-white text-black hover:text-white hover:bg-blue-600 text-sm py-2 px-2 w-[223px] h-[50px] outline outline-2'
         />

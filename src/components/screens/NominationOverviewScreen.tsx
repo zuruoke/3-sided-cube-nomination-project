@@ -1,11 +1,15 @@
+'use client';
+
 import React from 'react';
 import NominationOverviewTile from '../nomination/NominationOverviewTile';
 import CustomButton from '../utils/buttons/Buttons';
 import { anonymous } from '@/app/layout';
+import { useRouter } from 'next/navigation';
 
 const NominationOverviewScreen: React.FC = () => {
+  const router = useRouter();
   return (
-    <div className='mx-auto max-w-3xl px-9 py-8 h-[50rem] mb-32 bg-white shadow-lg'>
+    <div className='mx-auto max-w-3xl px-9 mt-8 py-8 h-[50rem] mb-32 bg-white shadow-lg'>
       {/* Top Image */}
       <img
         src='/nomination_overview.png'
@@ -33,6 +37,7 @@ const NominationOverviewScreen: React.FC = () => {
 
       {/* Using CustomButton here */}
       <CustomButton
+        onClick={() => router.push('/nominationSubmitted')}
         text='SUBMIT'
         additionalStyles='mt-7 mb-4 mx-auto block bg-black text-white w-[223px] h-[50px]'
       />
