@@ -53,7 +53,7 @@ const NominationsScreen: React.FC = () => {
           {/* List of nominations */}
           {nominations.map((nomination, index) => (
             <SubmissionsTile
-              editOnClick={() => router.push('/enterNominee')}
+              editOnClick={() => router.push('/enter-nominee')}
               deleteOnClick={() => setModalOpen(true)}
               key={index}
               nominee={nomination.nominee}

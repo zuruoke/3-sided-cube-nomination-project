@@ -1,12 +1,12 @@
 import { anonymous, poppins } from '@/app/layout';
 
-interface DropdownProps {
-  label: string;
-  options: string[];
+export interface DropdownProps {
+  title: string;
+  options: { label: string; value: string }[];
   onChange: (selected: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options, onChange }) => {
+const Dropdown: React.FC<DropdownProps> = ({ title, options, onChange }) => {
   // const [selectedOption, setSelectedOption] = useState<string>('Select Option');
 
   return (
@@ -15,7 +15,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onChange }) => {
         className={`block font-bold text-base mb-1.5 text-black tracking-wide ${poppins.className}`}
       >
         <span className='text-pink-500 font-medium text-base'>* </span>
-        {label}
+        {title}
       </label>
 
       <div className=' relative'>
@@ -23,9 +23,9 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onChange }) => {
           className={`w-[400px] px-3 py-2.5 bg-white border appearance-none border-gray-300 text-gray-500 text-sm ${anonymous.className}`}
         >
           <option disabled>Select Option</option>
-          {options.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          {options.map((data) => (
+            <option key={data.label} value={data.value}>
+              {data.label}
             </option>
           ))}
         </select>

@@ -33,7 +33,7 @@ const IntroScreen: React.FC = () => {
         <CustomButton
           text='GET STARTED'
           additionalStyles='w-[286px] h-[50px] bg-black text-white border-none px-8 py-3 text-sm'
-          onClick={() => router.push('/enterNominee')}
+          onClick={() => router.push('/enter-nominee')}
         />
       </div>
     </div>

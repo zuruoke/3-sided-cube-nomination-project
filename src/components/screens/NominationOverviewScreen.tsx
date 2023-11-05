@@ -37,7 +37,7 @@ const NominationOverviewScreen: React.FC = () => {
 
       {/* Using CustomButton here */}
       <CustomButton
-        onClick={() => router.push('/nominationSubmitted')}
+        onClick={() => router.push('/nomination-submitted')}
         text='SUBMIT'
         additionalStyles='mt-7 mb-4 mx-auto block bg-black text-white w-[223px] h-[50px]'
       />

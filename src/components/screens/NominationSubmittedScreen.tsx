@@ -42,7 +42,7 @@ const NominationSubmittedScreen: React.FC = () => {
           additionalStyles='hover:bg-green-600 bg-white text-black py-2 text-sm px-8 w-[223px] h-[50px] outline outline-2'
         />
         <CustomButton
-          onClick={() => router.push('/enterNominee')}
+          onClick={() => router.push('/enter-nominee')}
           text='CREATE NEW NOMINATION'
           additionalStyles='bg-white text-black hover:text-white hover:bg-blue-600 text-sm py-2 px-2 w-[223px] h-[50px] outline outline-2'
         />
