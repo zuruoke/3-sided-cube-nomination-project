@@ -35,7 +35,15 @@ As per the task requirements, authentication is handled via a bearer token. For 
 
 The primary challenge encountered was the time constraint. To address this, I initially implemented a simplified solution and progressively enhanced it with more features and refinements. I adopted a modular approach, building reusable components and utility functions that could be quickly iterated upon and expanded.
 
-Given more time, I would focus on enhancing the state management system, integrating a global state solution like Redux or Context API to manage the application state more robustly. This would be coupled with a middleware like Redux-Saga or Redux-Thunk for handling asynchronous logic and side effects, providing a more scalable and maintainable codebase.
+Given more time, I would focus on two main areas of refinement:
+
+1. **State Management**: Enhancing the state management system by integrating a global state solution such as Redux or Context API to manage the application state more robustly. This would be coupled with middleware like Redux-Saga or Redux-Thunk for handling asynchronous logic and side effects, providing a more scalable and maintainable codebase.
+
+2. **UI Components**: Further refining the UI components to ensure pixel-perfect alignment with the design specifications. This would involve a detailed review of the design system, ensuring that each component not only looks impeccable but also interacts seamlessly across all devices and platforms, enhancing the overall user experience.
+
+3. **Dockerization**: Containerizing the app using Docker to encapsulate the environment and dependencies. This ensures that the application can be run in any environment without the "it works on my machine" issue, facilitates continuous integration/continuous deployment (CI/CD) workflows, and simplifies deployment and scaling operations on cloud platforms. Dockerizing the app would further professionalize the development pipeline, making it robust against discrepancies between local development and production environments.
+
+These enhancements would elevate the application, ensuring a seamless and more engaging user interface that is both visually appealing and functionally robust.
 
 ## Additional Notes
 
