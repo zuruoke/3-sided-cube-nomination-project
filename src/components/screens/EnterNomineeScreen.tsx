@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Dropdown from '../utils/Dropdown';
-import InputField from '../utils/forms/InputField';
 import CustomButton from '../utils/buttons/Buttons';
-import FairnessSlider from '../utils/Reactions';
 import Image from 'next/image';
 import { anonymous, poppins } from '@/app/layout';
 import Modal from '../utils/alerts/Modal';
@@ -12,47 +9,34 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { queryKeyFn } from '@/model/api/apiContext';
-import { Nominee } from '@/model/api/apiResponses';
-import { useQueryClient } from '@tanstack/react-query';
 import { _fetcherOptions, emojis } from '@/model/utils/constants';
-import { useCubeAcademyRetrieveNomineeList } from '@/model/api/apiComponents';
+import { useNomineeViewModel } from '@/view_model/hooks/useNomineeViewModel';
+import useNomineeState from '@/view_model/hooks/useNomineeState';
+
 
 const EnterNomineeScreen: React.FC = () => {
 
   const {
-    data: nominees,
+    nomineeOptions,
+    nominees,
     isLoading,
-    isError,
+    isError, 
     error
-  } = useCubeAcademyRetrieveNomineeList(_fetcherOptions);
+  } = useNomineeViewModel();
 
-    const nomineeOptions: { label: string | undefined; value: string | undefined; }[] | undefined = nominees?.data?.map(nominee => ({
-    label: nominee.first_name,
-    value: nominee.nominee_id // Assuming each nominee has a unique 'id' that you want to use as the value
-  }));
 
-// const queryClient = useQueryClient();
-//   const queryKey = queryKeyFn({
-//     path: "/api/nominee",
-//     operationId: "cubeAcademyRetrieveNomineeList",
-//     variables: {}
-//   });
-//   console.log(queryKey)
-//   const cachedData: Nominee | undefined = queryClient.getQueryData(queryKey);
-
-//   // Assuming cachedData is an array and each nominee has a 'first_name' property
-//   const nomineeOptions:any = cachedData?.data?.map(nominee => ({
-//     label: nominee.first_name,
-//     value: nominee.nominee_id // Assuming each nominee has a unique 'id' that you want to use as the value
-//   }));
-//   console.log(nomineeOptions);
-
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [text, setText] = useState<any>('');
-  const [option, setOption] = useState<any>();
-  const [ratingVal, setRating] = useState<any>('');
-  const [isValid, setIsValid] = useState(false);
+  const {
+    openModal,
+    setOpenModal,
+    text,
+    setText,
+    option,
+    setOption,
+    ratingVal,
+    setRating,
+    isValid,
+    setIsValid,
+  } = useNomineeState();
 
   const ratings = ['Very Unfair', 'Unfair', 'Not Sure', 'Fair', 'Very Fair'];
   let selectedRating: string = ratings[0];
@@ -63,8 +47,8 @@ const EnterNomineeScreen: React.FC = () => {
   });
 
   const dataToValidate = {
-    textArea: { text },
-    Option: { option },
+    textArea: text ,
+    Option: option ,
   };
 
   function findLabelByValue(value: string | undefined) {
@@ -80,7 +64,7 @@ const EnterNomineeScreen: React.FC = () => {
       .catch((validationError) => {
         console.error(validationError.errors);
       });
-  }, [dataToValidate]);
+  }, [dataToValidate, schema]);
 
   const {
     register,
@@ -89,7 +73,6 @@ const EnterNomineeScreen: React.FC = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const formSubmit = (data: any) => {
-    console.log(data);
   };
 
   const router = useRouter();
@@ -255,18 +238,19 @@ const EnterNomineeScreen: React.FC = () => {
             />
             <CustomButton
               type='submit'
-              disabled={isValid}
+              disabled={!isValid}
               text='NEXT'
               additionalStyles='w-[223px] h-[50px] bg-black text-white disabled:bg-[#C3C3C3]'
               onClick={() => {
-                console.log(text);
-                sessionStorage.setItem('nominationData', JSON.stringify({
-                  'value': option,
-                  'name': labelToShow,
-                  'rating': ratingVal,
-                  'text': text,
-                }));
-                router.push('/nomination-overview')
+                if (labelToShow !== null && text.trim().length > 0){
+                  sessionStorage.setItem('nominationData', JSON.stringify({
+                    'value': option,
+                    'name': labelToShow,
+                    'rating': ratingVal,
+                    'text': text,
+                  }));
+                  router.push('/nomination-overview')
+                }
               }}
             />
           </div>

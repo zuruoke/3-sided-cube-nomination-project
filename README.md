@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cube Academy Web Developer Task - README
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a front-end application for the Cube Academy 'Cube of the Month' nomination system, constructed to adhere to the provided Figma designs and functional requirements. It incorporates a responsive design for both desktop and aims to provide a seamless user experience for nominating individuals for recognition.
+
+## Getting Started Locally
+
+To run this project locally, execute the following commands:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navigate to [http://localhost:3000](http://localhost:3000) to view the application. The development server refreshes the page as you make edits.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technical Decisions
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**TypeScript**: Utilized for its strong typing system, enhancing code reliability and maintainability.
 
-## Learn More
+**Next.js**: Chosen for its out-of-the-box features like server-side rendering and file-based routing, aligning with the requirement for a React framework.
 
-To learn more about Next.js, take a look at the following resources:
+**Tailwind CSS**: Employed for its utility-first approach, facilitating rapid UI development consistent with the design system provided.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**React Hook Form & yup**: Integrated for form handling and schema validation to ensure robust data processing.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Tanstack Query & OpenAPI**: Combined to handle REST requests efficiently, with hooks auto-generated from the API documentation for streamlined development.
 
-## Deploy on Vercel
+## Authentication Token Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+As per the task requirements, authentication is handled via a bearer token. For simplicity and to focus on the core task, a static token is included to facilitate authorized API requests.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Challenges and Solutions
+
+The primary challenge encountered was the time constraint. To address this, I initially implemented a simplified solution and progressively enhanced it with more features and refinements. I adopted a modular approach, building reusable components and utility functions that could be quickly iterated upon and expanded.
+
+Given more time, I would focus on enhancing the state management system, integrating a global state solution like Redux or Context API to manage the application state more robustly. This would be coupled with a middleware like Redux-Saga or Redux-Thunk for handling asynchronous logic and side effects, providing a more scalable and maintainable codebase.
+
+## Additional Notes
+
+While the current solution uses Local Session Storage to persist nomination data temporarily, this was a strategic choice to avoid overengineering at this stage. In a production scenario, a more persistent and scalable storage solution would be employed.
+
+## Conclusion
+
+This application represents a balance between the adherence to design and functional specifications, and the pragmatic constraints of development timelines. It showcases a commitment to code quality, architectural best practices, and user-centric design principles. It's a stepping stone towards a scalable solution that could evolve with the needs of Cube Academy.

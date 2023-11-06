@@ -1,5 +1,3 @@
-// hooks/useNominationsViewModel.js
-
 import { useCubeAcademyGetAllNominations } from '@/model/api/apiComponents';
 import { _fetcherOptions } from '@/model/utils/constants';
 

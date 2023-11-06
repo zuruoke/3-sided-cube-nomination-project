@@ -10,56 +10,29 @@ import { _fetcherOptions } from '@/model/utils/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeyFn } from '@/model/api/apiContext';
 import { Nomination, Nominations, Nominee } from '@/model/api/apiResponses';
+import { useNominationsViewModel } from '@/view_model/hooks/useNominationsViewModel';
+import { useNomineeViewModel } from '@/view_model/hooks/useNomineeViewModel';
+import NoNominationScreen from './NoNominationScreen';
 
 const NominationsScreen: React.FC = () => {
 
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const queryKeyNominations = queryKeyFn({
-    path: "/api/nomination",
-    operationId: "cubeAcademyGetAllNominations",
-    variables: {}
-  });
-
-  const queryKeyNominees = queryKeyFn({
-    path: "/api/nominee",
-    operationId: "cubeAcademyRetrieveNomineeList",
-    variables: {}
-  });
-
-  useEffect(() => {
-    console.log('called')
-    // Define a function that will return a promise with the data
-    const fetchData = () => {
-      // Fetch data using your API method
-      return fetchCubeAcademyGetAllNominations(_fetcherOptions);
-    };
-    const fetchData1 = () => {
-      return fetchCubeAcademyRetrieveNomineeList(_fetcherOptions);
-    }
-  
-    // Prefetch the query
-    queryClient.prefetchQuery({
-      queryKey: queryKeyNominations, // This is your unique query key
-      queryFn: fetchData, // This is the function to fetch your data
-      
-    });
-
-    queryClient.prefetchQuery({
-      queryKey: queryKeyNominees,
-      queryFn: fetchData1
-    })
-  
-  }, [queryClient]);
-
-  const cachedData: Nominations | undefined = queryClient.getQueryData(queryKeyNominations);
+  const {
+    nominationsCount,
+    isLoading,
+    nominations
+  } = useNominationsViewModel();
 
 
- const cachedDataNominee: Nominee | undefined = queryClient.getQueryData(queryKeyNominees);
+  const {
+    nominees,
+    error
+  } = useNomineeViewModel();
 
  function findNameById(value: string | undefined) {
-  const nominee = cachedDataNominee?.data?.find(item => item.nominee_id === value);
+  const nominee = nominees?.data?.find(item => item.nominee_id === value);
 
   // Return the first name if the nominee is found, otherwise return undefined
   return nominee ? nominee.first_name : undefined;
@@ -67,24 +40,45 @@ const NominationsScreen: React.FC = () => {
 
 const { mutate, isPending, isError } = useCubeAcademyDeleteNomination();
 
-const handleSubmit = (nomination_id: string) => {
-  mutate({
-    'pathParams': {nominationId: nomination_id},
-    'headers': {
-      'authorization': 'Bearer 476|QODMS8Au5t3RJsrTFeTbXPdnckz9D5l3iDzECmDWd09d14cc'
-     },
-  }, 
-    {
-    onSuccess: () => {
-      // If the mutation is successful, navigate to the submitted page
-      router.push('/nomination-submitted');
-    },
-    onError: () => {
-    },
+  const queryKey = queryKeyFn({
+      path: "/api/nomination",
+      operationId: "cubeAcademyGetAllNominations",
+      variables: {},
   });
+
+const handleSubmit = () => {
+  if (currentNominationId) {
+    mutate({
+      'pathParams': { nominationId: currentNominationId },
+      'headers': {
+        'authorization': 'Bearer 476|QODMS8Au5t3RJsrTFeTbXPdnckz9D5l3iDzECmDWd09d14cc'
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey});
+      },
+      onError: () => {
+      },
+    });
+    // Reset or handle the current nomination ID if necessary
+    setCurrentNominationId(null);
+    setModalOpen(false); // Close the modal
+  }
 };
 
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [currentNominationId, setCurrentNominationId] = useState(null);
+
+  const handleDeleteClick = (nominationId: any) => {
+    setCurrentNominationId(nominationId); // Set the current nomination ID
+    setModalOpen(true); // Open the modal
+  };
+
+  if (nominations?.length == 0) {
+    return NoNominationScreen();
+  }
 
   return (
     <div className='mb-28 mt-10'>
@@ -119,12 +113,12 @@ const handleSubmit = (nomination_id: string) => {
           </thead>
           <tbody>
             {/* List of nominations */}
-          {cachedData?.data?.map((nomination, index) => (
+          {nominations?.map((nomination, index) => (
             <SubmissionsTile
               editOnClick={() => router.push('/enter-nominee')}
-              deleteOnClick={() => setModalOpen(true)}
-              key={index}
-              nominee={findNameById(nomination.nominee_id) || ''}
+              deleteOnClick={() => handleDeleteClick(nomination.nomination_id)}
+              key={nomination.nomination_id}
+              nominee={ findNameById(nomination.nominee_id) || ''}
               dateSubmitted={nomination.date_submitted || ''}
               reason={nomination.reason || ''}
               processStatus={nomination.process || ''}
@@ -136,9 +130,7 @@ const handleSubmit = (nomination_id: string) => {
       </div>
     </div>
   </div>
-</div>
-         
-
+  </div>
           
         </div>
       </div>
@@ -148,10 +140,12 @@ const handleSubmit = (nomination_id: string) => {
         title='DELETE THIS NOMINATION'
         description='If you delete this nomination, the nominee will no longer be put forward by you.'
         onCancel={() => setModalOpen(false)}
-        onConfirm={() => alert('DELETED')}
+        onConfirm={() => handleSubmit()}
       />
     </div>
   );
 };
 
 export default NominationsScreen;
+
+  

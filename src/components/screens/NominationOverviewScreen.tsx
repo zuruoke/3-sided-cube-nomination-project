@@ -7,6 +7,7 @@ import { anonymous } from '@/app/layout';
 import { useRouter } from 'next/navigation';
 import { useCubeAcademyCreateNomination } from '@/model/api/apiComponents';
 import { _fetcherOptions, formatEmojis } from '@/model/utils/constants';
+import useNomineeState from '@/view_model/hooks/useNomineeState';
 
 interface NominationState {
   name: string;
@@ -43,6 +44,12 @@ const NominationOverviewScreen: React.FC = () => {
   // Using the mutation hook
   const { mutate, isPending, isError } = useCubeAcademyCreateNomination();
 
+  const { 
+    clearState 
+  } = useNomineeState();
+
+
+
   const handleSubmit = () => {
     // Prepare the data for the mutation
     const nominationPayload = {
@@ -65,6 +72,7 @@ const NominationOverviewScreen: React.FC = () => {
       onSuccess: () => {
         // If the mutation is successful, navigate to the submitted page
         router.push('/nomination-submitted');
+        clearState();
       },
       onError: () => {
       },
