@@ -28,18 +28,14 @@ const Header: React.FC<HeaderProps> = ({ nominationsCount }) => {
         </div>
       </div>
 
-      <div className='flex items-center underline underline-offset-[3px] hover:text-gray-400 cursor-pointer transition duration-300'>
+      <div className='flex items-center underline underline-offset-[3px] hover:text-gray-400 cursor-pointer transition duration-300'
+        onClick={() => router.push('/nominations')}
+      >
         <span
           className={`text-sm font-light tracking-wide ${anonymous.className}`}
         >
           {`Your Nominations   (${nominationsCount})`}
         </span>
-        {/* <span className='text-lg font-semibold tracking-wide'>
-          Your Nominations
-        </span>
-        <span className='text-white rounded-full px-3 py-1 text-md'>
-          ({nominationsCount})
-        </span> */}
       </div>
     </header>
   );

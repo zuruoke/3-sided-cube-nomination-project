@@ -3,33 +3,22 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import { useCubeAcademyRetrieveNomineeList } from '@/model/api/apiComponents';
-import { _fetcherOptions } from '@/model/utils/constants';
+import { useNominationsViewModel } from '@/view_model/hooks/useNominationsViewModel';
+
 
 interface LayoutProps {
   children?: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const {
-    data: nominees,
-    isLoading,
-    isError,
-    error
-  } = useCubeAcademyRetrieveNomineeList(_fetcherOptions);
+  const { nominationsCount } = useNominationsViewModel();
 
-  // Calculate nominationsCount based on the loading state and the presence of data
-  const nominationsCount = isLoading || isError ? 0 : nominees?.data?.length || 0;
   return (
-    <div
-      className={`layout-container bg-custom-background bg-green-500 bg-cover flex flex-col h-full`}
-    >
+    <div className="layout-container bg-gradient-to-r from-[#A0FF1F] to-[#00ED71] flex-col h-full">
       <Header nominationsCount={nominationsCount} />
-
-      <main className='flex-grow flex flex-col justify-center items-center -mb-8'>
+      <main className="flex-grow flex flex-col bg-custom-background bg-cover bg-repeat justify-center items-center -mb-8">
         {children}
       </main>
-
       <Footer />
     </div>
   );
